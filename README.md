@@ -74,7 +74,7 @@
                     }
                 ]
                 ```
-            * **returns all the meetings from past one month**
+            * **returns all the meetings from past one month. here HOD is F10(assumed)**
         5. **HTTP DELETE /calender/{id}/{date}/{time}**
             * **used to delete blockCalender and scheduleMeeting of {id} on {date} and {time}**
         6. **HTTP PUT /calender/{id}/block/{date}/{time}**
