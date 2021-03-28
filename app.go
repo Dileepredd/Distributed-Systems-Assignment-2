@@ -12,7 +12,10 @@ import (
     "sync"
 )
 
-// utils
+/*
+section: 1
+util functions
+*/
 func checktimeformat(time_ string)bool{
     _, err := time.Parse("15:04",time_)
     if err != nil {
@@ -57,15 +60,20 @@ func getDate(key string) string {
 func getTime(key string) string {
 	return key[11:]
 }
-// to order resources and access, to not get deadlock.
-// func comparekeys(key1 string, key2 string)bool,bool{
-//     t1,_ := time.Parse("02-01-2006 15:04",key1)
-// 	t2,_ := time.Parse("02-01-2006 15:04",key2)
-// 	return t1.Before(t2), t1.Equal(t2)
-// }
+/* 
+to order resources and access, to not get deadlock.
+not required because no part of code requires morethan 1 lock at a time.
+func comparekeys(key1 string, key2 string)bool,bool{
+    t1,_ := time.Parse("02-01-2006 15:04",key1)
+	t2,_ := time.Parse("02-01-2006 15:04",key2)
+	return t1.Before(t2), t1.Equal(t2)
+}
+*/
 
-
-// data structure
+/*
+section: 2
+data structures
+*/
 type meeting struct{
     Title string `json:"title"`
     Group []string `json:"group"`
@@ -85,7 +93,10 @@ var globallock sync.Mutex
 // func read()
 // func update()
 
-// routes
+/*
+section : 3
+routes and routehandelers
+*/
 func updatemeetCalender(w http.ResponseWriter, r *http.Request){
     vars := mux.Vars(r)
     name := vars["id"]
@@ -507,6 +518,7 @@ func blockCalender(w http.ResponseWriter, r *http.Request){
     c.lock.Lock()
     _,ok2 := c.Faculty[name]
     if(ok2 == true){
+        // w.WriteHeader(http.St)
         json.NewEncoder(w).Encode("error slot is already filled")
         c.lock.Unlock()
         return
